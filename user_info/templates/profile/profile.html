@@ -1,0 +1,224 @@
+{% extends 'login/base.html' %}
+    <head>
+        {% block head %}
+        {% load staticfiles %}
+        {% load static %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+		{% if user.is_authenticated %}
+			<title>{% block title %} {{user.username|title}} Profile {% endblock %}</title>
+		{% endif %}
+		<!-- Bootstrap Core CSS -->
+        <link href="{% static 'login/css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="{% static 'login/css/metisMenu.min.css' %}" rel="stylesheet">
+
+        <!-- Timeline CSS -->
+        <link href="{% static 'login/css/timeline.css' %}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{% static 'login/css/startmin.css' %}" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="{% static 'login/css/morris.css' %}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{% static 'login/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+		
+		{% endblock  %}
+    </head>
+<body>
+{% block body %}
+		<div id="wrapper">
+            <!--Navigation Top-Left  Starts-->
+            {% include 'login/nav_bar.html' %}
+        <!--Navigation Top-Left  Ends-->
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Profile</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- Page Badges  -->
+                    {% include 'login/page_badges.html' %}
+
+				<div class="row">
+					<div class="col-sm-10">
+						<h1>{{user|title}}</h1></div>
+					<div class="col-sm-2">
+						<a href="{{user.user_name.pic.url}}" class="pull-right">
+						<img title="profile image" class="img-circle img-responsive" src="{{user.user_name.pic.url}}" alt="Image Not Found"></a>
+					</div>
+				</div>
+
+				<div class="row">
+        			<div class="col-sm-3">
+            		<!--left col-->
+
+            		<ul class="list-group">
+						<li class="list-group-item text-muted">Profile</li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{user.user_name.created_date}}</li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Last seen</strong></span> {{user.last_login}}</li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Cnic no</strong></span> {{user.user_name.cnic_no}}</li>
+
+					</ul>
+        		</div>
+        <!--/col-3-->
+        <div class="col-sm-9">
+
+            <ul class="nav nav-tabs" id="myTab">
+                {% comment %} <li class="active"><a href="#home" data-toggle="tab">Home</a></li> {% endcomment %}
+                <li><a href="#todolist" data-toggle="tab">Todo List</a></li>
+                <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane" id="todolist">
+
+                    <h2></h2>
+
+                    <ul class="list-group">
+                        <li class="list-group-item text-muted">Inbox</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Here is your a link to the latest summary report from the..</a> 2.13.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Hi Joe, There has been a request on your account since that was..</a> 2.11.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Nullam sapien massaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Thllam sapien massaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Wesm sapien massaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">For therepien massaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Also we, havesapien massaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+                        <li class="list-group-item text-right"><a href="#" class="pull-left">Swedish chef is assaortor. A lobortis vitae, condimentum justo...</a> 2.11.2014</li>
+
+                    </ul>
+
+                </div>
+                <!--/tab-pane-->
+                <div class="tab-pane active" id="settings">
+
+                    <hr>
+                    <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="first_name">
+                                    <h4>First name</h4></label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name Here" title="enter your first name if any." value="{{user.first_name}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="last_name">
+                                    <h4>Last name</h4></label>
+                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name Here" title="enter your last name if any." value="{{user.last_name}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="phone">
+                                    <h4>Role</h4></label>
+                                <input type="text" class="form-control" name="role" id="role" placeholder="Define Your Role" title="enter your phone number if any." value={{user.user_name.role}}>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="mobile">
+                                    <h4>Mobile</h4></label>
+                                <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile No Here" title="enter your mobile number if any." value="{{user.user_name.phone_no}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email">
+                                    <h4>Email</h4></label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Here" title="enter your email." value={{user.email}}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email">
+                                    <h4>Address</h4></label>
+                                <input type="text" class="form-control" id="address" placeholder="Address Here" title="enter a location" value={{user.user_name.address}}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="password">
+                                    <h4>Password</h4></label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="password2">
+                                    <h4>Verify</h4></label>
+                                <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!--/tab-pane-->
+        </div>
+        <!--/tab-content-->
+
+    </div>
+
+                    <!-- Page Badges Ends-->
+                    <!-- /.row -->
+
+                    <!-- Page Content -->
+                    {% comment %} {% block page_content%} {% endblock %} {% endcomment %}
+                    <!-- Page Content Ends-->
+
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+	<!--=====================================================-->
+
+<!--/row-->
+		<!-- jQuery -->
+        <script src="{% static 'login/js/jquery.min.js' %}"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'login/js/bootstrap.min.js' %}"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="{% static 'login/js/metisMenu.min.js' %}"></script>
+
+        <!-- Morris Charts JavaScript -->
+        <script src="{% static 'login/js/raphael.min.js' %}"></script>
+        <script src="{% static 'login/js/morris.min.js' %}"></script>
+        <script src="{% static 'login/js/morris-data.js' %}"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="{% static 'login/js/startmin.js' %}"></script>
+{% endblock %}
+</body>

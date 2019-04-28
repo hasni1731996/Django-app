@@ -20,4 +20,13 @@ class User_register(TemplateView):
         #return render(request, 'login/index.html', {'data': 'password or username is wrong'},status=status.HTTP_404_NOT_FOUND)
 
 class User_Profile(TemplateView):
-    template_name = 'login/first.html'
+    template_name = 'profile/profile.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            print(request.user.email)
+            print('role',request.user.user_name.role)
+            # data = {
+            #     'username': request.user,
+            #     }
+            return render(request, 'profile/profile.html' ,status=status.HTTP_200_OK)
