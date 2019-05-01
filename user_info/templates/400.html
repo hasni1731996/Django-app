@@ -1,0 +1,9 @@
+{% extends 'login/base.html' %}
+<title>{% block title %} Bad Request {% endblock %}</title>
+<body>
+{% block body %}
+<h1>Bad request</h1>
+  </div>
+  <p style="margin-top: 1.2em">Hey you! My friend, it appears to me that you did something wrong.  :(</p>
+  <a href="{% url 'user_login' %}">Please Go Back To Login Page</a>
+{% endblock %}

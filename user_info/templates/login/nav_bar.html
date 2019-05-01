@@ -71,16 +71,19 @@
                     </li> {% endcomment %}
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i> {{username|title}} <b class="caret"></b>
+                            <i class="fa fa-user fa-fw"></i> {{user|title}} <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li><a href="{% url 'user_profile' %}"><i class="fa fa-user fa-fw"></i>Profile</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
+                            {% comment %} <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            </li> {% endcomment %}
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            </li>
+                            <form method="GET" action="{% url 'account_logout' %}">
+                                {% csrf_token %}
+                                <li><a href="{% url 'account_logout' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                </li>
+                            </form>
                         </ul>
                     </li>
                 </ul>
@@ -100,9 +103,11 @@
                                 </div>
                                 <!-- /input-group -->
                             </li>
+                            {% if user.user_name.role == 'ADMIN' %}
                             <li>
-                                <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                <a href="{% url 'user_profile' %}" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
+                            
                             {% comment %} <li>
                                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -116,11 +121,14 @@
                                 <!-- /.nav-second-level -->
                             </li> {% endcomment %}
                             <li>
-                                <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                                <a href="{% url 'postuser' %}"><i class="fa fa-user-plus"></i> Add User</a>
                             </li>
+                            {% endif %}
+                            {% if user.user_name.role == 'USER' %}
                             <li>
-                                <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                                <a href="{% url 'adding_patient' %}" class="active"><i class="fa fa-wheelchair"></i> Add Patient</a>
                             </li>
+                            {% endif %}
                             {% comment %} <li>
                                 <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">

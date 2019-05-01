@@ -1,0 +1,248 @@
+{% extends 'login/base.html' %}
+    <head>
+        {% block head %}
+        {% load staticfiles %}
+        {% load static %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+		{% if user.is_authenticated %}
+			<title>{% block title %} Add User|Admin {% endblock %}</title>
+		{% endif %}
+		<!-- Bootstrap Core CSS -->
+        <link href="{% static 'login/css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="{% static 'login/css/metisMenu.min.css' %}" rel="stylesheet">
+
+        <!-- Timeline CSS -->
+        <link href="{% static 'login/css/timeline.css' %}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{% static 'login/css/startmin.css' %}" rel="stylesheet">
+
+        <link href="{% static 'login/css/custom_style.css' %}" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="{% static 'login/css/morris.css' %}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{% static 'login/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+		
+		{% endblock  %}
+    </head>
+<body>
+{% block body %}
+		<div id="wrapper">
+            <!--Navigation Top-Left  Starts-->
+            {% include 'login/nav_bar.html' %}
+        <!--Navigation Top-Left  Ends-->
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Add User</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- Page Badges  -->
+                    {% include 'login/page_badges.html' %}
+
+        <div class="col-sm-9">
+            <div class="tab-content">
+                <div class="tab-pane active" id="settings">
+
+                    <hr>
+                    <form class="form" action="" method="post" id="registrationForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="first_name">
+                                    <h4>First name</h4></label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name Here" title="enter your first name if any." required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="last_name">
+                                    <h4>Last name</h4></label>
+                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name Here" title="enter your last name if any." required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="phone">
+                                    <h4>Username</h4></label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username Here" title="enter your phone number if any." required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="phone">
+                                    <h4>Cnic No</h4></label>
+                                <input type="text" class="form-control" name="cnic" id="cnic" placeholder="Cnic No Here" title="enter your phone number if any." maxlength="15" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="role">
+                                    <h4>Role</h4></label>
+                                    <select class="form-control" id="user_role">
+                                        <option value="ADMIN">ADMIN</option>
+                                        <option value="USER">USER</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="mobile">
+                                    <h4>Mobile</h4></label>
+                                <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile No Here" title="enter your mobile number if any." required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email">
+                                    <h4>Email</h4></label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Here" title="enter your email." required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email">
+                                    <h4>Address</h4></label>
+                                <input type="text" class="form-control" id="address" placeholder="Address Here" title="enter a location" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email">
+                                    <h4>Image</h4></label>
+                                <input type="file" name="myfile" class="form-control" id="img" title="Select Image" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="password">
+                                    <h4>Password</h4></label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password." required>
+                                <span toggle="#password" class="fa fa-lg fa-eye field-icon toggle-password"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="password2">
+                                    <h4>Verify</h4></label>
+                                <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2." required>
+                                <span toggle="#password2" class="fa fa-lg fa-eye field-icon toggle-password"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok-sign" id="btn_submit"></i> Save</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!--/tab-pane-->
+        </div>
+        <!--/tab-content-->
+
+    </div>
+
+                    <!-- Page Badges Ends-->
+                    <!-- /.row -->
+
+                    <!-- Page Content -->
+                    {% comment %} {% block page_content%} {% endblock %} {% endcomment %}
+                    <!-- Page Content Ends-->
+
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+	<!--=====================================================-->
+
+<!--/row-->
+		<!-- jQuery -->
+        <script src="{% static 'login/js/jquery.min.js' %}"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'login/js/bootstrap.min.js' %}"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="{% static 'login/js/metisMenu.min.js' %}"></script>
+
+        <!-- Morris Charts JavaScript -->
+        <script src="{% static 'login/js/raphael.min.js' %}"></script>
+        <script src="{% static 'login/js/morris.min.js' %}"></script>
+        <script src="{% static 'login/js/morris-data.js' %}"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="{% static 'login/js/startmin.js' %}"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="{% static 'login/js/custom.js' %}"></script>
+       
+       <!--CNIC Card Pattern through JS--> 
+        <script>
+            $('#cnic').keydown(function(){
+
+            //allow  backspace, tab, ctrl+A, escape, carriage return
+            if (event.keyCode == 8 || event.keyCode == 9 
+                                || event.keyCode == 27 || event.keyCode == 13 
+                                || (event.keyCode == 65 && event.ctrlKey === true) )
+                                    return;
+            if((event.keyCode < 48 || event.keyCode > 57))
+            event.preventDefault();
+
+            var length = $(this).val().length; 
+                        
+            if(length == 5 || length == 13)
+            $(this).val($(this).val()+'-');
+
+            });
+//////////// Ends/////////////
+
+/////////////// Password Hide/show through JS ///////////////
+            $(".toggle-password").click(function() {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var input = $($(this).attr("toggle"));
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+////////////Ends///////////////////
+
+            
+        </script>
+{% endblock %}
+</body>

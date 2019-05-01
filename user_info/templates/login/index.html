@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>{% block title %} {{username|title}} Dashboard {% endblock %}</title>
+        <title>{% block title %} {{user|title}} Dashboard {% endblock %}</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="{% static 'login/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -29,6 +29,8 @@
         <!-- Custom Fonts -->
         <link href="{% static 'login/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -37,8 +39,8 @@
         <![endif]-->
         {% endblock  %}
     </head>
-    <body>
-{% block body %}
+<body id="profile_body">
+{% block body %} 
         <div id="wrapper">
             <!--Navigation Top-Left  Starts-->
             {% include 'login/nav_bar.html' %}
@@ -87,6 +89,8 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="{% static 'login/js/startmin.js' %}"></script>
+
+        <script src="{% static 'login/js/custom.js' %}"></script>
     {% endblock %}
     </body>
      
