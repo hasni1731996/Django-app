@@ -6,6 +6,11 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from .models import *
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
+from .serializers import *
+from django.http import HttpResponse
 
 class User_register(TemplateView):
     template_name = 'login/login.html'
@@ -111,6 +116,7 @@ class Patient_view_user(TemplateView):
             return render(request, 'user/patients_data.html', context,status=status.HTTP_200_OK)
         return render(request, '400.html' ,status=status.HTTP_200_OK)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class Patient_view_admin(TemplateView):
     template_name = 'admin/view_all_patients.html'
 
@@ -121,4 +127,27 @@ class Patient_view_admin(TemplateView):
             'allpatients': allpatients
             }
             return render(request, 'admin/view_all_patients.html', context,status=status.HTTP_200_OK)
+        return render(request, '400.html' ,status=status.HTTP_200_OK)
+
+    def put(self, request,*args, **kwargs):
+        if request.user.is_authenticated and request.is_ajax():
+            #print('in put function here... & ajax request',request.body)
+            body_data = request.body.decode('utf-8')
+            data = json.loads(body_data)
+            print(data)
+            obj = Patient_Register.objects.get(id=data['id'])
+            serializer = Patient_Serializer(obj, data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return HttpResponse(request, 'admin/view_all_patients.html',status=status.HTTP_200_OK)
+            return render(request, '400.html' ,status=status.HTTP_200_OK)
+    
+    def delete(self, request,*args, **kwargs):
+        if request.user.is_authenticated and request.is_ajax():
+            print('in delete Request..')
+            body_data = request.body.decode('utf-8')
+            data = json.loads(body_data)
+            print(data)
+            Patient_Register.objects.get(id=data['id']).delete()
+            return HttpResponse(request, 'admin/view_all_patients.html',status=status.HTTP_200_OK)
         return render(request, '400.html' ,status=status.HTTP_200_OK)

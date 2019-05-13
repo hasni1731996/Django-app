@@ -121,6 +121,65 @@ $(document).ready(function(){
 
     $('#patients_table, #patients_table_user').DataTable({
         responsive: true
-});
+    });
+
+    //// Ends Here ///////
+
+    //// Update (patient's data) by admin
+    
+    $("#update_btn").click(function()
+    {  
+        data = 
+        {
+           id : $('#patientid').val(),
+           name: $('#name').val(),
+           age : $('#age').val(),
+           created_date : $('#created_date').val()
+            }
+            $.ajax({
+                type: "PUT",
+                url : "",
+                data:JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data)
+                {
+                    console.log(data);
+                    location.reload(true);
+                },
+                error: function(data) 
+                {
+                    console.log(data);
+                }
+            });
+            
+    });
+    // Ends Here ////////
+
+    $("#delete_btn").click(function()
+    {  
+        //alert('delet value'+$('#delid').val());
+        data = 
+        {
+           id : $('#delid').val(),
+            }
+            $.ajax({
+                type: "DELETE",
+                url : "",
+                data:JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data)
+                {
+                    console.log(data);
+                    location.reload(true);
+                },
+                error: function(data) 
+                {
+                    console.log(data);
+                }
+            });
+            
+    });
 
 });

@@ -32,6 +32,9 @@
         <!-- Data tables CSS-->
        <link href=" https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css" type="text/css">
 
+       <!-- Sweet alert JS-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -81,11 +84,21 @@
                                             <tbody>
                                             {% for patient in allpatients %}
                                                 <tr class="gradeA">
+                                                    {% comment %} <td style="display:none;">{{ patient.id }}</td> {% endcomment %}
                                                     <td>{{ patient.name }}</td>
                                                     <td>{{ patient.age }}</td>
                                                     <td>{{ patient.created_date }}</td>
-                                                    <td class="center"><button type="button" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button></td>
-                                                    <td class="center"><button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button></td>
+                                                    
+                                                        <td class="center">
+                                                            <button type="button" class="btn btn-info update" data-toggle="modal" data-target="#updateModal" onclick="update_details('{{ patient.id }}', '{{ patient.name }}', '{{ patient.age }}', '{{ patient.created_date }}')">
+                                                            <i class="glyphicon glyphicon-pencil"></i> Update
+                                                            </button>
+                                                        </td>
+                                                        <td class="center">
+                                                            <button type="button" class="btn btn-danger delete" onclick="getid('{{ patient.id }}')" data-toggle="modal" data-target="#deleteModal">
+                                                            <i class="glyphicon glyphicon-remove"></i> Delete
+                                                            </button>
+                                                        </td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
@@ -101,9 +114,73 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
+                <!-- Update + Delete Modal Starts-->
+                <div class="container">
+                    <!--Update Modal -->
+                    <div class="modal fade" id="updateModal" role="dialog">
+                        <div class="modal-dialog">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Update Patient's Details:</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="update_form_patient" method="POST">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="form-control-label">Name:</label>
+                                        <input type="text" class="form-control" name="name" id="name" required>
+                                        <input type="hidden" id="patientid" name="patientid">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="patient-age" class="form-control-label">Age:</label>
+                                        <input type="number" class="form-control" name="age" id="age" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="patient-date" class="form-control-label">Created Date:</label>
+                                        <input type="date" class="form-control" name="created_date" id="created_date" required>
+                                    </div>
+                                
+                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="update_btn">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    
+                    <!--  Delete Modal -->
+                    <div class="modal fade" id="deleteModal" role="dialog">
+                        <div class="modal-dialog">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Delete Patient's Details:</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="update_form_patient" method="POST">
+                                <p>Are Your Sure You Want To Delete..!!</p>
+                                <input type="hidden" id="delid" name="delid">
+                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" id="delete_btn">Delete</button>
+                                </div>
+                            </form>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <!--Ends-->
             </div>
             <!-- /#page-wrapper -->
-
         </div>
         <!-- /#wrapper -->
 
@@ -123,9 +200,6 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="{% static 'login/js/startmin.js' %}"></script>
-        
-        <!-- Sweet alert JS-->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
         <!--Data Table JS-->
         <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
@@ -133,5 +207,45 @@
         
         <!--Custom JS (My Own JQUery File)-->
         <script src="{% static 'login/js/custom.js' %}"></script>
+
+        <!-- Get ID for Delete request-->
+        <script>
+            function getid(id)
+            {
+            document.getElementById("delid").value = id;
+            }
+            
+        </script>
+        <!--Ends Here-->
+
+        <script>
+        //Function for converting Date string into mm/dd/yy Format////
+        function formatDate(date) 
+        {
+            var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        // Ends Here ////
+
+        // Function for getting patient's Details //
+        function update_details(id, name, age,created_date)
+        {
+            document.getElementById("name").value = name;
+            document.getElementById("age").value = age;
+            document.getElementById("patientid").value = id;
+            var DateCreated = formatDate(created_date);
+            document.getElementById("created_date").value = DateCreated;
+        }
+
+        </script>
+        <!--Ends here-->
 {% endblock  %}
     </body>

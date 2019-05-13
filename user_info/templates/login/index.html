@@ -29,8 +29,6 @@
         <!-- Custom Fonts -->
         <link href="{% static 'login/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -89,8 +87,17 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="{% static 'login/js/startmin.js' %}"></script>
+         <!-- Sweet Alert Javascript-->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+        <!--Custom JavaScript-->
         <script src="{% static 'login/js/custom.js' %}"></script>
+        
+        <!--Body Onload Event -->
+        <script>
+        document.getElementById("profile_body").onload = swal("Welcom Here..!!", "Dar-E-Rehmat Welfare Socitey..!!");
+        </script>
+        <!--ends here-->
     {% endblock %}
     </body>
      

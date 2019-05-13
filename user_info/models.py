@@ -48,7 +48,7 @@ class Patient_Register(models.Model):
     age = models.IntegerField(default=0)
     created_date = models.DateField(default=date.today)
     objects = models.Manager()
-    today_patient = Todays_Patients() ##
+    today_patient = Todays_Patients() ##it returns details of total patients todays & number of patients today
 
     def __str__(self):
         return "%s (%s)" % (self.name, self.age)
