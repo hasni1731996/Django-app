@@ -16,4 +16,6 @@ urlpatterns = [
     path('patients_data/', Patient_view_user.as_view(), name='view_patients'), ## user views patient's details only (today) 
 
     path('view_patients_data_admin/', Patient_view_admin.as_view(), name='view_patients_admin'), ## admin view details about all patients
+
+    path('dashboard/',Dashboard_User.as_view(), name = 'user_dashboard') ##### Dashboard url/link for both Admin/user
 ]

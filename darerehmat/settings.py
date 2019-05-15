@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'darerehmat.middleware.CheckUserMiddleware',##Custom middleware for checking is requested user is authenticated or not ####
 ]
 
 ROOT_URLCONF = 'darerehmat.urls'

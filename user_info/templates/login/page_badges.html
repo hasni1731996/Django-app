@@ -54,7 +54,7 @@
                                             <i class="fa fa-users fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                        {% load total_patients_objs from user_template_tags%}
+                                        {% load total_patients_objs from user_template_tags %}
                                             <div class="huge">{% total_patients_objs %}</div>
                                             <div>Total Patients!</div>
                                         </div>
@@ -93,9 +93,9 @@
                                 </a>
                             </div>
                         </div>
-                         {% endif %}
+                         
                         <!--User Badges-->
-                        {% if user.user_name.role == 'USER' %}
+                        {% elif user.user_name.role == 'USER' %}
                         <div class="col-lg-3 col-md-6">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">

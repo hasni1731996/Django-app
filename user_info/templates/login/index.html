@@ -29,6 +29,13 @@
         <!-- Custom Fonts -->
         <link href="{% static 'login/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 
+        <!-- Custom Style Sheet -->
+        <link href="{% static 'login/css/custom_style.css' %}" rel="stylesheet">
+
+         <!--Fusion Charts-->
+        <script type="text/javascript" src="{% static "fusioncharts/js/fusioncharts.js" %}"></script>
+        <script type="text/javascript" src="{% static "fusioncharts/js/themes/fusioncharts.theme.fusion.js" %}"></script>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -59,7 +66,13 @@
                     <!-- /.row -->
 
                     <!-- Page Content -->
-                    {% comment %} {% block page_content%} {% endblock %} {% endcomment %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {% if user.user_name.role == 'ADMIN'%}
+                                <div id="Patientstchart-container">{{ output|safe }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
                     <!-- Page Content Ends-->
 
                     <!-- /.row -->
@@ -93,11 +106,6 @@
         <!--Custom JavaScript-->
         <script src="{% static 'login/js/custom.js' %}"></script>
         
-        <!--Body Onload Event -->
-        <script>
-        document.getElementById("profile_body").onload = swal("Welcom Here..!!", "Dar-E-Rehmat Welfare Socitey..!!");
-        </script>
-        <!--ends here-->
     {% endblock %}
     </body>
      
