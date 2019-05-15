@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from collections import OrderedDict
 from .fusioncharts import FusionCharts
 from django.views.generic import View
+from .decorators import *
 
 class User_register(TemplateView):
     template_name = 'login/login.html'
@@ -27,12 +28,14 @@ class User_register(TemplateView):
             return redirect('user_dashboard')
         return render(request, 'login/login.html', {'data': 'password or username is wrong'},status=status.HTTP_404_NOT_FOUND)
 
+@method_decorator(check_user, name='dispatch')
 class User_Profile(TemplateView):
     template_name = 'profile/profile.html'
 
     def get(self, request, *args, **kwargs):
         return render(request, 'profile/profile.html' ,status=status.HTTP_200_OK)
 
+@method_decorator(check_user, name='dispatch')
 class User_Logout(TemplateView):
     template_name = 'login/login.html'
 
@@ -51,6 +54,7 @@ class User_Logout(TemplateView):
             return redirect('user_dashboard')
         return render(request, 'login/login.html', {'data': 'password or username is wrong'},status=status.HTTP_404_NOT_FOUND)
 
+@method_decorator(check_user, name='dispatch')
 class Add_User(TemplateView):
     template_name = 'admin/adduser.html'
 
@@ -82,6 +86,7 @@ class Add_User(TemplateView):
             return render(request,'admin/adduser.html', status=status.HTTP_400_BAD_REQUEST)
         return render(request, 'admin/adduser.html',status=status.HTTP_200_OK)
 
+@method_decorator(check_user, name='dispatch')
 class Patient_Registration(TemplateView):
     template_name = 'user/register.html'
 
@@ -92,6 +97,7 @@ class Patient_Registration(TemplateView):
         )
         return render(request, 'user/register.html',status=status.HTTP_200_OK)
 
+@method_decorator(check_user, name='dispatch')
 class Patient_view_user(TemplateView):
     template_name = 'user/patients_data.html'
 
@@ -103,6 +109,7 @@ class Patient_view_user(TemplateView):
         }
         return render(request, 'user/patients_data.html', context,status=status.HTTP_200_OK)
 
+@method_decorator(check_user, name='dispatch')
 class Dashboard_User(TemplateView):
     template_name = 'login/index.html'
 
@@ -113,6 +120,7 @@ class Dashboard_User(TemplateView):
             ######## Ends ################
 
 @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(check_user, name='dispatch')  ####### Two decorators 1st for csrf_exempt 2nd for checking User authentication
 class Patient_view_admin(TemplateView):
     template_name = 'admin/view_all_patients.html'
 
