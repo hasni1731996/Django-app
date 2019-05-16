@@ -35,7 +35,6 @@ class User_Profile(TemplateView):
     def get(self, request, *args, **kwargs):
         return render(request, 'profile/profile.html' ,status=status.HTTP_200_OK)
 
-@method_decorator(check_user, name='dispatch')
 class User_Logout(TemplateView):
     template_name = 'login/login.html'
 
@@ -86,16 +85,21 @@ class Add_User(TemplateView):
             return render(request,'admin/adduser.html', status=status.HTTP_400_BAD_REQUEST)
         return render(request, 'admin/adduser.html',status=status.HTTP_200_OK)
 
+@method_decorator(csrf_exempt, name='dispatch')
 @method_decorator(check_user, name='dispatch')
 class Patient_Registration(TemplateView):
     template_name = 'user/register.html'
 
     def post(self, request,*args, **kwargs):
-        Patient_Register.objects.create(
-            name= request.POST.get('name'),
-            age = request.POST.get('age')
-        )
-        return render(request, 'user/register.html',status=status.HTTP_200_OK)
+        body_data = request.body.decode('utf-8')
+        data = json.loads(body_data)
+        print('actual data...',data)
+        serializer = Patient_Serializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse('Success',status=status.HTTP_200_OK)
+        return HttpResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 @method_decorator(check_user, name='dispatch')
 class Patient_view_user(TemplateView):
@@ -139,7 +143,7 @@ class Patient_view_admin(TemplateView):
         serializer = Patient_Serializer(obj, data=data)
         if serializer.is_valid():
             serializer.save()
-            return HttpResponse(request, 'admin/view_all_patients.html',status=status.HTTP_200_OK)
+            return HttpResponse('Success',status=status.HTTP_200_OK)
     
     def delete(self, request,*args, **kwargs):
         print('in delete Request..')
@@ -147,7 +151,7 @@ class Patient_view_admin(TemplateView):
         data = json.loads(body_data)
         print(data)
         Patient_Register.objects.get(id=data['id']).delete()
-        return HttpResponse(request, 'admin/view_all_patients.html',status=status.HTTP_200_OK)
+        return HttpResponse('Success',status=status.HTTP_200_OK)
 
 ########## Function For Creating Graph & Return Values ##############
 def Patients_Chart():

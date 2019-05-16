@@ -32,7 +32,6 @@ $(document).ready(function(){
                     img:$img,
                     username: $username,
                     pass: $pass,
-
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                 },
                 success: function(data)
@@ -65,65 +64,54 @@ $(document).ready(function(){
 
     /// patient registration ///
 
-    $("#patientForm").submit(function()
+    $("#btn_submit").click(function()
     {
-        $p_name = $('#p_name').val();
-        $age = $('#age').val();
-
-        if($('#p_name').val() == "" || $('#age').val() == "")
+        data =
         {
-            alert("Please fill up the required field");
-        }else
-        {
-            $.ajax({
-                type: "POST",
-                url : "",
-                data: {
-                    name:$p_name,
-                    age:$age,
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                },
-                success: function(data)
-                {
-                    swal({
-                        title: "Success!",
-                        text: "Patient Created Successfully!",
-                        icon: "success",
-                        button: "OK",
-                      });
-                    
-                },
-                error: function(data) 
-                {
-                    swal({
-                        title: "Sorry!",
-                        text: "Error Creating Patient!",
-                        icon: "error",
-                        button: "OK",
-                      });
-                  
-                }
-            });
-            console.log($p_name)
+            name:$('#p_name').val(),
+            age:$('#age').val()
+        }
+        $.ajax({
+            type: "post",
+            url : "",
+            data:JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            //dataType: 'json', #####it specifies the result format which return from view
+            success: function(data)
+            {
+                //alert('SUccess')
+                console.log(data)
+                swal({
+                    title: "Success!",
+                    text: "Patient Created Successfully!",
+                    icon: "success",
+                    button: "OK",
+                    });
+                
+            },
+            error: function(data) 
+            {
+                //alert('Error..')
+                console.log(data)
+                swal({
+                    title: "Sorry!",
+                    text: "Error Creating Patient!",
+                    icon: "error",
+                    button: "OK",
+                    });
+                
+            }
+        });
             $("#patientForm").print({
                 title: "Print Patient's Details..!!!",
                 noPrintSelector: "#btn_submit,#rest_btn",
             });
             $("#patientForm")[0].reset();
-            return false;
-        }
+        return false;
         
     });
     
     /// ends here ///
-
-    /// Data Table Initialization
-
-    $('#patients_table, #patients_table_user').DataTable({
-        responsive: true
-    });
-
-    //// Ends Here ///////
 
     //// Update (patient's data) by admin
     
@@ -141,18 +129,30 @@ $(document).ready(function(){
                 url : "",
                 data:JSON.stringify(data),
                 contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
+                //dataType: 'json',
                 success: function(data)
                 {
-                    console.log(data);
+                    //console.log(data);
+                    swal({
+                    title: "Success!",
+                    text: "Patient Details Updated!",
+                    icon: "success",
+                    button: "OK",
+                    });
                     location.reload(true);
                 },
                 error: function(data) 
                 {
-                    console.log(data);
+                    //console.log(data);
+                    swal({
+                    title: "Sorry!",
+                    text: "Error Updating Details!",
+                    icon: "error",
+                    button: "OK",
+                    });
                 }
             });
-            
+        return false;
     });
     // Ends Here ////////
 
@@ -168,18 +168,40 @@ $(document).ready(function(){
                 url : "",
                 data:JSON.stringify(data),
                 contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
+                //dataType: 'json',
                 success: function(data)
                 {
-                    console.log(data);
+                    //console.log(data);
+                    swal({
+                        title: "Success!",
+                        text: "Patient Deleted Successfully!",
+                        icon: "success",
+                        button: "OK",
+                        });
                     location.reload(true);
                 },
                 error: function(data) 
                 {
-                    console.log(data);
+                    //console.log(data);
+                    swal({
+                    title: "Sorry!",
+                    text: "Error Deleting Patient!",
+                    icon: "error",
+                    button: "OK",
+                    });
                 }
             });
-            
+        return false;  
     });
+
+    /// Ends///////
+
+    /// Data Table Initialization
+
+    $('#patients_table, #patients_table_user').DataTable({
+        responsive: true
+    });
+
+    //// Ends Here ///////
 
 });

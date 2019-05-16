@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from django.db.models import Count
 from datetime import date
 from django.utils import timezone
+import datetime
 
 def generateUUID():
     return str(uuid4())
@@ -34,13 +35,9 @@ class Portal_Management(models.Model):
         return self.user.username
 
 class Todays_Patients(models.Manager):
-    def total_patient_obj(self):
-        date_current=timezone.localtime(timezone.now()).date()
+    def total_patient_today(self):
+        date_current = datetime.datetime.now().date()
         return self.filter(created_date=date_current).aggregate(Count('id' , distinct=True))
-
-    def details_patients_today(self):
-        date_current=timezone.localtime(timezone.now()).date()
-        return self.filter(created_date=date_current)
 
 class Patient_Register(models.Model):
     id = models.UUIDField(primary_key=True, default=generateUUID, editable=False)

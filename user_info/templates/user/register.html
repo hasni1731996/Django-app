@@ -25,9 +25,6 @@
 
         <link href="{% static 'login/css/custom_style.css' %}" rel="stylesheet">
 
-        <!-- Morris Charts CSS -->
-        <link href="{% static 'login/css/morris.css' %}" rel="stylesheet">
-
         <!-- Custom Fonts -->
         <link href="{% static 'login/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 		
@@ -55,10 +52,8 @@
         <div class="col-sm-9">
             <div class="tab-content">
                 <div class="tab-pane active" id="settings">
-
                     <hr>
-                    <form class="form" action="" method="post" id="patientForm">
-                        {% csrf_token %}
+                    <form class="form" method="POST" id="patientForm">
                         <div class="form-group">
                             <div class="col-xs-6" id="patient_name">
                                 <label for="first_name">
@@ -70,7 +65,8 @@
                             <div class="col-xs-6" id="today_date">
                                 <label for="first_name">
                                     <h4>Today's:</h4></label>
-                                <input type="text" class="form-control" name="c_date" id="c_date" value="{% now 'jS F Y' %}" readonly>
+                                    {% load todays_date from user_template_tags %}
+                                <input type="text" class="form-control" name="c_date" id="c_date" value="{% todays_date %}" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,7 +79,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <br>
-                                <button class="btn btn-lg btn-success" id="btn_submit"><i class="glyphicon glyphicon-ok-sign"></i> Print</button>
+                                <button class="btn btn-lg btn-success" id="btn_submit" type="button"><i class="glyphicon glyphicon-ok-sign"></i> Print</button>
                                 <button class="btn btn-lg" type="reset" id="rest_btn"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                             </div>
                         </div>
@@ -123,11 +119,6 @@
 
         <!-- Metis Menu Plugin JavaScript -->
         <script src="{% static 'login/js/metisMenu.min.js' %}"></script>
-
-        <!-- Morris Charts JavaScript -->
-        <script src="{% static 'login/js/raphael.min.js' %}"></script>
-        <script src="{% static 'login/js/morris.min.js' %}"></script>
-        <script src="{% static 'login/js/morris-data.js' %}"></script>
 
         <!-- Custom Theme JavaScript -->
         <script src="{% static 'login/js/startmin.js' %}"></script>
