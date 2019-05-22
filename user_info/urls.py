@@ -17,5 +17,8 @@ urlpatterns = [
 
     path('view_patients_data_admin/', Patient_view_admin.as_view(), name='view_patients_admin'), ## admin view details about all patients
 
-    path('dashboard/',Dashboard_User.as_view(), name = 'user_dashboard') ##### Dashboard url/link for both Admin/user
+    path('dashboard/',Dashboard_User.as_view(), name = 'user_dashboard'), ##### Dashboard url/link for both Admin/user
+
+    path('createuser/', User_create_admin.as_view(), name='admincreate_user'), 
+
 ]

@@ -17,7 +17,7 @@ class Portal_Management(models.Model):
     USER_CHOICES = ((USER, 'user'),(ADMIN, 'admin'))
     id = models.UUIDField(primary_key=True, default=generateUUID, editable=False)
     user = models.OneToOneField(User,blank=True,null=True,on_delete=models.CASCADE,related_name='user_name')
-    pic = models.ImageField(blank=True,null=True)
+    pic = models.ImageField(blank=True,null=True,upload_to='users_profile/')
     address = models.CharField(max_length=100)
     phone_no = PhoneField(blank=True, help_text='Contact phone number')
     cnic_no = models.CharField(max_length=200)

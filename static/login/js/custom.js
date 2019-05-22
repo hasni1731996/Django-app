@@ -1,65 +1,74 @@
 $(document).ready(function(){
-    /// User registration ///
-    $("#registrationForm").submit(function()
-    {
-        $first_name = $('#first_name').val();
-        $last_name = $('#last_name').val();
-        $cnic = $('#cnic').val();
-        $user_role = $('#user_role').val();
-        $mobile = $('#mobile').val();
-        $email = $('#email').val();
-        $address = $('#address').val();
-        $img = $('#img').val();
-        $username = $('#username').val();
-        $pass = $('#password2').val();
 
-        if($('#username').val() == "" || $('#pass').val() == "")
-        {
-            alert("Please fill up the required field");
-        }else
-        {
-            $.ajax({
-                type: "POST",
-                url : "",
-                data: {
-                    first_name:$first_name,
-                    last_name:$last_name,
-                    cnic:$cnic,
-                    user_role:$user_role,
-                    mobile:$mobile,
-                    email:$email,
-                    address:$address,
-                    img:$img,
-                    username: $username,
-                    pass: $pass,
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                },
-                success: function(data)
-                {
-                    swal({
-                        title: "Congrats!",
-                        text: "You Have Successfully Created User!",
-                        icon: "success",
-                        button: "OK",
-                      });
-                    console.log(data)
-                },
-                error: function(data) 
-                {
-                    swal({
-                        title: "Sorry!",
-                        text: "Error Creating User!",
-                        icon: "error",
-                        button: "OK",
-                      });
-                  
-                }
-            });
-            $("#registrationForm")[0].reset();
-            return false;
-        }
-        
+     ///
+     var fileName="";
+     $('input[type="file"]').change(function(e){
+        fileName = e.target.files[0].name;
+        //alert('The file "' + fileName +  '" has been selected.');
     });
+    ////
+
+    /// User registration ///
+    // $("#save_user").click(function()
+    // {
+    //     data ={
+    //         username : $('#username').val(),
+    //         password:$('#password2').val(),
+    //         "user_name": {
+    //         //pic:fileName,
+    //         //pic:'WhatsApp Image 2019-05-15 at 8.22.52 PM.jpeg',
+    //         address:$('#address').val(),
+    //         phone_no:$('#mobile').val(),
+    //         cnic_no:$('#cnic').val(),
+    //         role:$('#user_role').val()
+    //         }
+            
+    //     }
+    //     console.log('data..posted..'+JSON.stringify(data))
+    //     if($('#username').val() == "" || $('#password2').val() == "" || $('#password').val() == "" || $('#img').val() == "" || $('#address').val() == "" || $('#mobile').val() == "" || $('#cnic').val() == "" || $('#user_role').val() == "")
+    //     {
+    //         swal({
+    //             title: "Sorry!",
+    //             text: "Please Fill All Fields!",
+    //             icon: "error",
+    //             button: "OK",
+    //           });
+    //     }
+    //     else
+    //     {
+    //         $.ajax({
+    //             type: "POST",
+    //             url : "",
+    //             enctype:"multipart/form-data",
+    //             data:JSON.stringify(data),
+    //             //dataType: 'json',
+    //             contentType: "application/json; charset=utf-8",
+    //             success: function(data)
+    //             {
+    //                 swal({
+    //                     title: "Congrats!",
+    //                     text: "You Have Successfully Created User!",
+    //                     icon: "success",
+    //                     button: "OK",
+    //                   });
+    //                 console.log(data)
+    //             },
+    //             error: function(data) 
+    //             {
+    //                 swal({
+    //                     title: "Sorry!",
+    //                     text: "Error Creating User!",
+    //                     icon: "error",
+    //                     button: "OK",
+    //                   });
+                  
+    //             }
+    //         });
+    //         $("#registrationForm")[0].reset();
+    //         return false;
+    //     }
+        
+    // });
     ///// ends here ///
 
     /// patient registration ///

@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView,View,CreateView
 from django.shortcuts import render,redirect
-from rest_framework import status
+from rest_framework import status,generics
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from .models import *
+from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
@@ -12,8 +13,10 @@ from .serializers import *
 from django.http import HttpResponse
 from collections import OrderedDict
 from .fusioncharts import FusionCharts
-from django.views.generic import View
 from .decorators import *
+from rest_framework.parsers import MultiPartParser
+from .forms import *
+from django.urls import reverse_lazy
 
 class User_register(TemplateView):
     template_name = 'login/login.html'
@@ -53,37 +56,35 @@ class User_Logout(TemplateView):
             return redirect('user_dashboard')
         return render(request, 'login/login.html', {'data': 'password or username is wrong'},status=status.HTTP_404_NOT_FOUND)
 
+
 @method_decorator(check_user, name='dispatch')
 class Add_User(TemplateView):
     template_name = 'admin/adduser.html'
 
     def post(self, request,*args, **kwargs):
-        try:
-            user = User.objects.create_user(
-                username=request.POST.get('username'),
-                email=request.POST.get('email'),
-                password=request.POST.get('pass'),
-                first_name=request.POST.get('first_name'),
-                last_name= request.POST.get('last_name')
-                )
-        except:
-            return render(request,'admin/adduser.html', status=status.HTTP_400_BAD_REQUEST)
+        data={
+            "username":request.POST.get('username'),
+            "password":request.POST.get('password2'),
+            "user_name":
+            {
+                "cnic_no":request.POST.get('cnic'),
+                "phone_no":request.POST.get('mobile'),
+                "role":request.POST.get('user_role'),
+                "address":request.POST.get('address'),
+                "pic":request.FILES.get('myfile')
+            }
+        }
 
-        if user !='':
-            user = User.objects.get(email=request.POST.get('email'))
-            _Register = Portal_Management(
-                user=user,
-                cnic_no=request.POST.get('cnic'),
-                phone_no=request.POST.get('mobile'),
-                role=request.POST.get('user_role'),
-                address=request.POST.get('address'),
-                pic=request.POST.get('img')
-                )
-            _Register.save()
-        else:
-            print('in exception')
-            return render(request,'admin/adduser.html', status=status.HTTP_400_BAD_REQUEST)
-        return render(request, 'admin/adduser.html',status=status.HTTP_200_OK)
+        print('files..........',data)
+        serializer = UserSerializer(data=data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                context={'user_created':True}
+                return render(request, 'admin/adduser.html',context ,status=status.HTTP_200_OK)
+        except:
+            print(serializer.errors)
+            return render(request, 'admin/adduser.html', status=status.HTTP_400_BAD_REQUEST)
 
 @method_decorator(csrf_exempt, name='dispatch')
 @method_decorator(check_user, name='dispatch')
@@ -98,6 +99,8 @@ class Patient_Registration(TemplateView):
         if serializer.is_valid():
             serializer.save()
             return HttpResponse('Success',status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
         return HttpResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -186,3 +189,9 @@ def Patients_Chart():
     return column2D
 
 ####################ENDS HERE#############################
+
+
+class User_create_admin(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    parser_classes = (MultiPartParser,)

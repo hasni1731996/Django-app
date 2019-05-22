@@ -54,26 +54,18 @@
                 <div class="tab-pane active" id="settings">
 
                     <hr>
-                    <form class="form" action="" method="post" id="registrationForm" enctype="multipart/form-data">
-                        {% csrf_token %}
+                    {% if user_created == 'True'%}
+                    <div class="alert alert-success" role="alert">
+                    A simple success alert—check it out!
+                    </div>
+                    {% elif user_created !== 'True' %}
+                    <div class="alert alert-danger" role="alert">
+                    A simple success alert—check it out!
+                    </div>
+                    {% endif %}
+                    <form class="form" action="" method="POST" id="registrationForm" enctype="multipart/form-data">
+                    {% csrf_token %}
                         <div class="form-group">
-                            <div class="col-xs-6">
-                                <label for="first_name">
-                                    <h4>First name</h4></label>
-                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name Here" title="enter your first name if any." required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <div class="col-xs-6">
-                                <label for="last_name">
-                                    <h4>Last name</h4></label>
-                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name Here" title="enter your last name if any." required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-
                             <div class="col-xs-6">
                                 <label for="phone">
                                     <h4>Username</h4></label>
@@ -95,26 +87,17 @@
                             <div class="col-xs-6">
                                 <label for="role">
                                     <h4>Role</h4></label>
-                                    <select class="form-control" id="user_role">
+                                    <select class="form-control" id="user_role" name="user_role">
                                         <option value="ADMIN">ADMIN</option>
                                         <option value="USER">USER</option>
                                     </select>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-xs-6">
                                 <label for="mobile">
                                     <h4>Mobile</h4></label>
-                                <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile No Here" title="enter your mobile number if any." required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <div class="col-xs-6">
-                                <label for="email">
-                                    <h4>Email</h4></label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Here" title="enter your email." required>
+                                <input type="number" class="form-control" name="mobile" id="mobile" placeholder="Mobile No Here" title="enter your mobile number if any." required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -122,12 +105,10 @@
                             <div class="col-xs-6">
                                 <label for="email">
                                     <h4>Address</h4></label>
-                                <input type="text" class="form-control" id="address" placeholder="Address Here" title="enter a location" required>
+                                <input type="text" class="form-control" name="address" id="address" placeholder="Address Here" title="enter a location" required>
                             </div>
                         </div>
-
                         <div class="form-group">
-
                             <div class="col-xs-6">
                                 <label for="email">
                                     <h4>Image</h4></label>
@@ -156,7 +137,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <br>
-                                <button class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok-sign" id="btn_submit"></i> Save</button>
+                                <button class="btn btn-lg btn-success" type="submit" id="save_user"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
                                 <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                             </div>
                         </div>
