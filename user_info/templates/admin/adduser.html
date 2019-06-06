@@ -54,15 +54,12 @@
                 <div class="tab-pane active" id="settings">
 
                     <hr>
-                    {% if user_created == 'True'%}
+                    {% if user_created == True %}
                     <div class="alert alert-success" role="alert">
-                    A simple success alert—check it out!
-                    </div>
-                    {% elif user_created !== 'True' %}
-                    <div class="alert alert-danger" role="alert">
-                    A simple success alert—check it out!
+                    User Created Successfully.!
                     </div>
                     {% endif %}
+                    
                     <form class="form" action="" method="POST" id="registrationForm" enctype="multipart/form-data">
                     {% csrf_token %}
                         <div class="form-group">
