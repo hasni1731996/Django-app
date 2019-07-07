@@ -8,6 +8,7 @@ from datetime import date
 from django.utils import timezone
 import datetime
 
+
 def generateUUID():
     return str(uuid4())
 
